@@ -6,6 +6,7 @@ alias glp='gerrit ls-projects'
 
 # Git
 alias gs='git status'
+alias gd='git diff'
 
 alias build-hist='git for-each-ref --sort=taggerdate --format '\''%(tagger) %(refname) %(taggerdate) %(*objectname)'\'' refs/tags|column -t|grep build'
 alias tags='git for-each-ref --sort=taggerdate --format '\''%(tagger) %(refname) %(taggerdate) %(*objectname)'\'' refs/tags|column -t|grep'

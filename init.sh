@@ -1,6 +1,6 @@
 #!/bin/sh
 
-for dotfile in `find $(pwd)/dotfiles -maxdepth 1 -type f`
+for dotfile in `find $(pwd)/dotfiles -mindepth 1 -maxdepth 1`
 do
-   echo ln -fs ${dotfile} ~
+   ln -fs ${dotfile} ~
 done
