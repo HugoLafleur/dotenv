@@ -11,6 +11,8 @@ if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
 fi
 
 # Customize to your needs...
+export VISUAL=vim
+export EDITOR="$VISUAL"
 export PATH=$PATH:${HOME}/bin
 export PATH="/usr/local/sbin:$PATH"
 
