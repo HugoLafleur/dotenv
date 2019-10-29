@@ -1,6 +1,6 @@
 #!/bin/sh
 
-for dotfile in `ls -A1 | grep -E "^\."| grep -vE ".*swp$|init.sh"`
+for dotfile in `find $(pwd)/dotfiles -maxdepth 1 -type f`
 do
-   ln -fs `pwd`/${dotfile} ~
+   echo ln -fs ${dotfile} ~
 done

@@ -1,3 +1,0 @@
-# !/bin/bash
-
-open_with_sublime_text () { open "$@" -a 'Sublime Text'; }
