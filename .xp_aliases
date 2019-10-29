@@ -1,0 +1,11 @@
+# !/bin/bash
+. ~/.xp_functions
+
+# Logs
+alias xptail='xp_tail_application_logs'
+alias mara='xp_get_marathon_password'
+alias marathon='xp_get_marathon_password'
+alias hap='xp_get_haproxy_password'
+alias haproxy='xp_get_haproxy_password'
+alias mes='xp_get_mesos_password'
+alias mesos='xp_get_mesos_password'

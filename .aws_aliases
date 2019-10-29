@@ -1,0 +1,58 @@
+# !/bin/bash
+. ~/.aws_functions
+
+# Environments
+alias d='AWS_PROFILE=dev'
+alias t='AWS_PROFILE=test'
+alias p='AWS_PROFILE=prod'
+alias pn='AWS_PROFILE=playnetwork'
+alias tpn='AWS_PROFILE=theplaynetwork'
+alias ol='AWS_PROFILE=octave-live'
+alias ops='AWS_PROFILE=octaveliveops'
+alias eu='AWS_DEFAULT_REGION=eu-west-1'
+
+# Display
+alias j='AWS_OUTPUT=json'
+
+alias dev='aws --profile dev'
+alias tst='aws --profile test'
+alias prod='aws --profile prod'
+
+# Keys
+alias pk='grep -A2 prod ~/.aws/credentials |tail -n2|awk '\''{print $3}'\'''
+alias dk='grep -A2 dev ~/.aws/credentials |tail -n2|awk '\''{print $3}'\'''
+alias tk='grep -A2 test ~/.aws/credentials |tail -n2|awk '\''{print $3}'\'''
+
+# Shortcuts
+alias acc='aws_get_account_id'
+alias alc='aws_autoscaling_describe_launch_config'
+alias ami='aws_ec2_list_owned_images'
+alias amii='aws_ec2_list_shared_images'
+alias asg='aws_autoscaling_list_asg'
+alias asga='aws_autoscaling_list_scaling_activities'
+alias asgai='aws_autoscaling_describe_scaling_activity'
+alias cataglist='aws_get_cost_allocation_resource_tags'
+alias catagres='aws_get_cost_allocation_tagged_resources'
+alias elb='aws_ec2_describe_load_balancers'
+alias i='aws_ec2_describe_instances'
+alias inst='aws_ec2_describe_instances'
+alias logs='aws_cloudwatch_logs'
+alias rds='aws_rds_list_instances'
+alias res='aws_cloudformation_describe_resources'
+alias s='aws_cloudformation_list_stacks'
+alias s3='aws s3'
+alias s3bp='aws_s3_get_bucket_policy'
+alias sg='aws_ec2_list_security_groups'
+alias sginfo='aws_ec2_show_security_groups'
+alias si='aws_cloudformation_describe_stacks'
+alias sr='aws_cloudformation_describe_resources'
+alias stackinfo='aws_cloudformation_describe_stacks'
+alias stacks='aws_cloudformation_list_stacks'
+alias sparam='aws_cloudformation_describe_stack_parameters'
+alias vol='aws_ec2_describe_volumes'
+alias wlme='aws_ec2_add_publicip_to_sg'
+alias zo='aws_r53_list_hosted_zones'
+alias zr='aws_r53_list_record_sets'
+alias zrp='zr /hostedzone/Z15YM4RS6MLUZR'
+alias zrt='AWS_PROFILE=test zr /hostedzone/Z1KB649RISJQ7A'
+alias zrd='AWS_PROFILE=dev zr /hostedzone/Z3NMR545F0EN0D'

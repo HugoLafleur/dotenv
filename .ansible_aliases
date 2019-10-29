@@ -1,0 +1,14 @@
+#!/bin/bash
+
+# Inventory
+alias ec2='/usr/local/bin/ec2.py'
+
+# 'ansible-playbook'
+alias anspb='AWS_PROFILE=prod ansible-playbook -i /usr/local/bin/ec2.py --key-file=~/.ssh/its.private.pem -u root'
+alias anstb='AWS_PROFILE=test ansible-playbook -i /usr/local/bin/ec2.py --key-file=~/.ssh/touchtunes-test.private.pem -u root'
+alias ansdb='AWS_PROFILE=dev ansible-playbook -i /usr/local/bin/ec2.py --key-file=~/.ssh/touchtunes-dev.private.pem -u root'
+
+# 'ansible'
+alias ansp='AWS_PROFILE=prod ansible -i /usr/local/bin/ec2.py --key-file=~/.ssh/its.private.pem -u root'
+alias anst='AWS_PROFILE=test ansible -i /usr/local/bin/ec2.py --key-file=~/.ssh/touchtunes-test.private.pem -u root'
+alias ansd='AWS_PROFILE=dev ansible -i /usr/local/bin/ec2.py --key-file=~/.ssh/touchtunes-dev.private.pem -u root'

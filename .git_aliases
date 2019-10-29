@@ -1,0 +1,17 @@
+#!/bin/bash
+
+# Gerrit
+alias gerrit='ssh -p 29418 gerrit-01.touchtunes.com gerrit'
+alias glp='gerrit ls-projects'
+
+# Git
+alias gs='git status'
+
+alias build-hist='git for-each-ref --sort=taggerdate --format '\''%(tagger) %(refname) %(taggerdate) %(*objectname)'\'' refs/tags|column -t|grep build'
+alias tags='git for-each-ref --sort=taggerdate --format '\''%(tagger) %(refname) %(taggerdate) %(*objectname)'\'' refs/tags|column -t|grep'
+alias deploy-hist='git for-each-ref --sort=taggerdate --format '\''%(tagger) %(refname) %(taggerdate) %(*objectname)'\'' refs/tags|column -t|grep deployed'
+alias rel-intl='git for-each-ref --sort=taggerdate --format '\''%(tagger) %(refname) %(taggerdate) %(*objectname)'\'' refs/tags|column -t|grep "refs\/tags\/[0-9]*\.[0-9]*\.[0-9]*"|grep -v US'
+alias rel-us='git for-each-ref --sort=taggerdate --format '\''%(tagger) %(refname) %(taggerdate) %(*objectname)'\'' refs/tags|column -t|grep "refs\/tags\/[0-9]*\.[0-9]*\.[0-9]*"|grep US --color=no'
+alias rel='git for-each-ref --sort=taggerdate --format '\''%(tagger) %(refname) %(taggerdate) %(*objectname)'\'' refs/tags|column -t|grep "refs\/tags\/[0-9]*\.[0-9]*\.[0-9]*" --color=no'
+
+# TO BE SORTED

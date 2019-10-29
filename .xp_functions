@@ -1,0 +1,72 @@
+#!/bin/bash
+
+xp_tail_application_logs () {
+  CONTEXT=`echo "$1" | cut -d- -f1`
+  APP="$2"
+
+  # Get credentials
+  if [ -f ~/.xp/$CONTEXT ]; then
+    . ~/.xp/$CONTEXT
+  fi
+
+  case $CONTEXT in
+  "dev")
+    LOGSTREAM_ENDPOINT=logstream.scaffold-masters-main-us.dev.cld.touchtunes.com
+    LOGSTREAM_URL=$TT_ROLES_LOGMANAGER_ENV_BASIC_AUTH_USER:$TT_ROLES_LOGMANAGER_ENV_BASIC_AUTH_PASS@$LOGSTREAM_ENDPOINT
+    ;;
+  "test")
+    LOGSTREAM_ENDPOINT=logstream.scaffold-masters-test-us.dev.cld.touchtunes.com
+    LOGSTREAM_URL=$TT_ROLES_LOGMANAGER_ENV_BASIC_AUTH_USER:$TT_ROLES_LOGMANAGER_ENV_BASIC_AUTH_PASS@$LOGSTREAM_ENDPOINT
+    ;;
+  "staging")
+    LOGSTREAM_ENDPOINT=logstream.scaffold-masters-staging-us.test.cld.touchtunes.com
+    LOGSTREAM_URL=$TT_ROLES_LOGMANAGER_ENV_BASIC_AUTH_USER:$TT_ROLES_LOGMANAGER_ENV_BASIC_AUTH_PASS@$LOGSTREAM_ENDPOINT
+    ;;
+  "prod")
+    LOGSTREAM_ENDPOINT=logstream.scaffold-masters-main-us.tsp.cld.touchtunes.com
+    LOGSTREAM_URL=$TT_ROLES_LOGMANAGER_ENV_BASIC_AUTH_USER:$TT_ROLES_LOGMANAGER_ENV_BASIC_AUTH_PASS@$LOGSTREAM_ENDPOINT
+    ;;
+  *)
+    ;;
+  esac
+
+  if [ -z $CONTEXT ]; then
+    if [ -z $APP ]; then
+      curl http://$LOGSTREAM_URL/logs?query=app.$CONTEXT.*
+    else
+      curl http://$LOGSTREAM_URL/logs?query=app.$CONTEXT.$APP.*
+    fi
+  else
+    curl http://$LOGSTREAM_URL/logs
+  fi
+}
+
+xpapi () {
+   MOJI_API='curl -s -u admin:hI1e9akFezA1wQtHxxLObXHjfjYRH2NbUmBuWsAnW api.scaffold-masters-main-us.tsp.cld.touchtunes.com/v1'
+   for node in `$MOJI_API/nodes|jq -r '.response[].name'|sort`; do $MOJI_API/nodes/$node/status|jq -r --arg NODE $node '.response[]|[$NODE, .name, .status, .status_text]|@csv'; done
+}
+
+xp_get_marathon_password () {
+   if [ -z "$1" ]; then
+      PLATFORM=prod
+   else
+      PLATFORM="$1"
+   fi
+   ls ~/.xp/$PLATFORM > /dev/null 2>&1 \
+      || echo Platform $PLATFORM not found in ~/.xp/ \
+      && grep TT_ROLES_MARATHON_ENV_MARATHON_HTTP_CREDENTIALS ~/.xp/$PLATFORM |cut -d: -f2
+}
+
+xp_get_haproxy_password () {
+   PLATFORM="$1"
+   ls ~/.xp/$PLATFORM > /dev/null 2>&1 \
+      || echo Platform $PLATFORM not found in ~/.xp/ \
+      && grep TT_ROLES_LOADBALANCER_ENV_HAPROXY_STATS_PASS ~/.xp/$PLATFORM |cut -d= -f2
+}
+
+xp_get_mesos_password () {
+   PLATFORM="$1"
+   ls ~/.xp/$PLATFORM > /dev/null 2>&1 \
+      || echo Platform $PLATFORM not found in ~/.xp/ \
+      && grep TT_ROLES_MESOSMASTER_ENV_BASIC_AUTH_PASS ~/.xp/$PLATFORM |cut -d= -f2
+}

@@ -1,0 +1,36 @@
+" remap leader
+let mapleader = " "
+
+" vtr
+let g:VtrStripLeadingWhitespace = 0
+let g:VtrClearEmptyLines = 0
+let g:VtrAppendNewline = 1
+
+" plugins
+filetype off                  " required
+set nocompatible              " be iMproved, required
+set rtp+=~/.vim/bundle/Vundle.vim
+
+" plugins
+source ~/.vim/plugins.vim
+
+" syntax and settings
+colorscheme monokai
+syntax on
+set number
+set tabstop=3
+set shiftwidth=3
+" set autoindent
+set expandtab
+
+
+
+" automatically rebalance windows on vim resize
+autocmd VimResized * :wincmd =
+
+" zoom a vim pane, <C-w>= to re-balance
+nnoremap <leader>- :wincmd _<cr>:wincmd \|<cr>
+nnoremap <leader>= :wincmd =<cr>
+
+set splitbelow
+set splitright
