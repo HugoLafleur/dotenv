@@ -1,0 +1,6 @@
+#!/bin/bash
+
+set azure_list_rg_resources () {
+   RESOURCE_GROUP="$1"
+   az resource list -g "$RESOURCE_GROUP" -ojson | jq -r '.[]|[.name,.type]|@csv'| column -t -s,
+}

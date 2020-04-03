@@ -1,0 +1,9 @@
+#!/bin/bash
+
+source <(kubectl completion zsh)
+
+alias kc='kubectl'
+alias kx='kubectl config use-context'
+
+complete -F __start_kubectl kc
+complete -F _kubectl_config_use-context kx

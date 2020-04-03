@@ -1,0 +1,5 @@
+#!/bin/bash
+
+. ~/.azure_functions
+
+alias lgr='azure_list_rg_resources'
