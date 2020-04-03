@@ -4,6 +4,9 @@ source <(kubectl completion zsh)
 
 alias kc='kubectl'
 alias kx='kubectl config use-context'
+alias kgp='kubectl get pod'
+alias kgs='kubectl get service'
+alias kgn='kubectl get namespace'
 
-complete -F __start_kubectl kc
-complete -F _kubectl_config_use-context kx
+# complete -F __start_kubectl kc
+# complete -F _kubectl_config_use-context kx
