@@ -43785,7 +43785,7 @@
 	<key>NSWindow Frame NSNavPanelAutosaveName</key>
 	<string>440 451 799 448 0 0 1680 1050 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
-	<string>322 204 650 442 0 0 2560 1440 </string>
+	<string>322 204 905 567 0 0 2560 1440 </string>
 	<key>NeverWarnAboutShortLivedSessions_34244402-5CF5-4BE3-B7BC-29A186304247</key>
 	<true/>
 	<key>NeverWarnAboutShortLivedSessions_34244402-5CF5-4BE3-B7BC-29A186304247_selection</key>
@@ -45195,7 +45195,7 @@
 			<key>Non-ASCII Anti Aliased</key>
 			<true/>
 			<key>Normal Font</key>
-			<string>InconsolataForPowerline 18</string>
+			<string>HackNerdFontComplete-Regular 15</string>
 			<key>Open Toolbelt</key>
 			<false/>
 			<key>Option Key Sends</key>
@@ -47510,10 +47510,7 @@
 	</array>
 	<key>NoSyncBFPRecents</key>
 	<array>
-		<string>Inconsolata for Powerline</string>
-		<string>Anonymous Pro for Powerline</string>
-		<string>Liberation Mono for Powerline</string>
-		<string>Ubuntu Mono derivative Powerline</string>
+		<string>Hack Nerd Font</string>
 	</array>
 	<key>NoSyncFrame_SharedPreferences</key>
 	<dict>
@@ -47525,7 +47522,7 @@
 	<key>NoSyncInstallationId</key>
 	<string>C9A350D1-D808-43FE-8160-15BD69E10CBF</string>
 	<key>NoSyncLaunchExperienceControllerRunCount</key>
-	<integer>38</integer>
+	<integer>39</integer>
 	<key>NoSyncNeverRemindPrefsChangesLostForFile</key>
 	<true/>
 	<key>NoSyncNeverRemindPrefsChangesLostForFile_selection</key>
@@ -48310,7 +48307,7 @@
 	<key>SUHasLaunchedBefore</key>
 	<true/>
 	<key>SULastCheckTime</key>
-	<date>2020-04-03T23:28:20Z</date>
+	<date>2020-04-04T19:03:03Z</date>
 	<key>SUSendProfileInfo</key>
 	<false/>
 	<key>Secure Input</key>
