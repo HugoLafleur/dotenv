@@ -20,6 +20,8 @@ syntax on
 set number
 set tabstop=3
 set shiftwidth=3
+set ruler
+
 " set autoindent
 set expandtab
 

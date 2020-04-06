@@ -1,0 +1,22 @@
+vim cheat sheet
+
+*		move to next occurrence of this word
+e/E 	move to end of next word (/ignore symbols)
+w/W 	move to start of next word (/ignore symbols)
+
+mx		mark current cursor position
+'x		jump to start of marked line
+`x 		jump to marked cursor position
+''		jump to cursor postion before last jump
+'.		jump to last changed line
+
+H		jump to top of screen
+M 		jump to middle of screen
+L 		jump to bottom of screen
+
+gg		jump to first line
+G 		jump to last line
+
+zz		put this line in center of screen
+zt		put this line on top of screen
+
