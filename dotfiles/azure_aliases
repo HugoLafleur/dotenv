@@ -2,4 +2,7 @@
 
 . ~/.azure_functions
 
-alias lgr='azure_list_rg_resources'
+alias azg='azure_list_resource_groups'
+alias azr='azure_list_rg_resources'
+alias azv='azure_show_keyvault'
+alias azn='azure_show_vnet'

@@ -49,9 +49,9 @@ if [ -f ~/.k8s_aliases  ]; then
   . ~/.k8s_aliases
 fi
 
-# if [ -f ~/.azure_aliases  ]; then
-#   . ~/.azure_aliases
-# fi
+if [ -f ~/.azure_aliases  ]; then
+   . ~/.azure_aliases
+fi
 
 # fzf completion
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh

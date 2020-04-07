@@ -1,6 +1,32 @@
 #!/bin/bash
 
-set azure_list_rg_resources () {
-   RESOURCE_GROUP="$1"
-   az resource list -g "$RESOURCE_GROUP" -ojson | jq -r '.[]|[.name,.type]|@csv'| column -t -s,
+azure_list_rg_resources () {
+   AZ_RESOURCEGROUP="$(az group list --query '[].{name:name}| sort_by(@,&name)' | tail -n+3 | fzf --reverse)"
+   if [ ! -z "$AZ_RESOURCEGROUP" ]
+   then
+      az resource list --resource-group "$AZ_RESOURCEGROUP" "$@"
+   fi
+}
+
+azure_list_resource_groups () {
+   az group list --query '[].{name:name,location:location} | sort_by(@, &name)' "$@"
+}
+
+azure_show_keyvault () {
+   AZ_KEYVAULT=""
+   AZ_KEYVAULT="$(az keyvault list --query '[].{name:name} | sort_by(@,&name)' | tail -n+3 | fzf --reverse --header 'AZURE KEYVAULTS')"
+   
+   if [ ! -z "$AZ_KEYVAULT" ]
+   then
+      az keyvault show --name $AZ_KEYVAULT -ojson
+   fi
+}
+
+azure_show_vnet () {
+   AZ_VNET=$(az network vnet list | tail -n+3 | fzf --reverse --header 'AZURE VIRTUAL NETWORKS' | awk 'BEGIN {FS=" "} {printf "--name " $1 " --resource-group " $2 " "}')
+
+   if [ ! -z "$AZ_VNET" ]
+   then
+      eval az network vnet show -ojson "$AZ_VNET"
+   fi
 }
