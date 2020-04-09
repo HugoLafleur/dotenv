@@ -1,0 +1,18 @@
+#!/bin/bash
+
+github_open_repo_page () {
+   REQUEST_URL="$(git config --get remote.origin.url \
+      | sed -E 's/git@github.com:([a-zA-Z0-9]+)\/([a-zA-Z0-9|-]+)(\.git)?/https:\/\/api.github.com\/repos\/\1\/\2/g')"
+   REQUEST_AUTH="Authorization: token $(cat ~/.github/token)"
+   REQUEST="curl -sIL -H \"$REQUEST_AUTH\" \"$REQUEST_URL\""
+   RESPONSE_STATUS="$(eval $REQUEST | head -1 | cut -d' ' -f2)"
+   GITHUB_REPO_URL="$(git config --get remote.origin.url \
+      | sed -E 's/git@github.com:([a-zA-Z0-9]+)\/([a-zA-Z0-9|-]+)(\.git)?/https:\/\/github.com\/\1\/\2/g')"
+   if [[ "$RESPONSE_STATUS" == "200" ]]
+   then 
+      open "$GITHUB_REPO_URL"
+   else 
+      echo "ERROR: Cannot open $REQUEST_URL"
+   fi
+}
+

@@ -1,5 +1,7 @@
 #!/bin/bash
 
+. ~/.git_functions
+
 # Git
 alias gs='git status'
 alias gd='git diff'
