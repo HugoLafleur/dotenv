@@ -10,6 +10,7 @@ let g:VtrAppendNewline = 1
 filetype off                  " required
 set nocompatible              " be iMproved, required
 set rtp+=~/.vim/bundle/Vundle.vim
+set rtp+=/usr/local/opt/fzf
 
 " plugins
 source ~/.vim/plugins.vim
@@ -29,6 +30,14 @@ set expandtab
 " NERDTree
 map <C-n> :NERDTreeToggle<CR>
 
+" Search and open file
+map <C-p> :call fzf#run({'source': 'git ls-files', 'sink': 'e', 'left': '25%'})<CR>
+map <C-o> :call fzf#run({'source': 'git ls-files', 'sink': 'tabedit', 'left': '25%'})<CR>
+
+" tab navigation
+map <C-q> :tabprevious<CR>
+map <C-e> :tabnext<CR>
+
 " automatically rebalance windows on vim resize
 autocmd VimResized * :wincmd =
 
@@ -36,5 +45,6 @@ autocmd VimResized * :wincmd =
 nnoremap <leader>- :wincmd _<cr>:wincmd \|<cr>
 nnoremap <leader>= :wincmd =<cr>
 
+" intuitive splits
 set splitbelow
 set splitright

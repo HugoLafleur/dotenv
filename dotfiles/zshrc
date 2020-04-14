@@ -37,10 +37,6 @@ if [ -f ~/.ansible_aliases  ]; then
   . ~/.ansible_aliases
 fi
 
-if [ -f ~/.bash_aliases  ]; then
-  . ~/.bash_aliases
-fi
-
 if [ -f ~/.aws_aliases  ]; then
   . ~/.aws_aliases
 fi
@@ -51,6 +47,10 @@ fi
 
 if [ -f ~/.azure_aliases  ]; then
    . ~/.azure_aliases
+fi
+
+if [ -f ~/.sh_aliases  ]; then
+   . ~/.sh_aliases
 fi
 
 # fzf completion

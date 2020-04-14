@@ -1,0 +1,7 @@
+#!/bin/sh
+
+export GITHUB_OAUTH=$(cat ~/.github/oauth)
+
+. ~/.sh_functions
+
+alias ff='__find_in_files'
