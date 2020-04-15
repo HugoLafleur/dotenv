@@ -1,8 +1,8 @@
 #!/bin/sh
 
 __find_in_files () {
+
    SEARCH_KWORD=${1:-$(pbpaste)} 
-   echo $SEARCH_KWORD
    AG_PREVIEW="eval 'echo \"\u001b[36;1m{}\u001b[0m\"; echo \"\"; ag -C3 --color \"$SEARCH_KWORD\" {}'"
    eval ag -l "$SEARCH_KWORD" | fzf --reverse --preview-window=right:70% --preview $AG_PREVIEW
 
