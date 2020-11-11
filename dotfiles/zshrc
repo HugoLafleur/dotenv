@@ -23,6 +23,8 @@ export EDITOR="$VISUAL"
 export PATH=$PATH:${HOME}/bin
 export PATH="/usr/local/sbin:$PATH"
 
+setopt clobber
+
 [[ -f ~/.p10k.zsh ]] && source ~/.p10k.zsh
 
 if [ -f ~/.git_aliases  ]; then
@@ -37,9 +39,9 @@ if [ -f ~/.ansible_aliases  ]; then
   . ~/.ansible_aliases
 fi
 
-if [ -f ~/.aws_aliases  ]; then
-  . ~/.aws_aliases
-fi
+# if [ -f ~/.aws_aliases  ]; then
+#   . ~/.aws_aliases
+# fi
 
 if [ -f ~/.k8s_aliases  ]; then
   . ~/.k8s_aliases
@@ -51,6 +53,10 @@ fi
 
 if [ -f ~/.sh_aliases  ]; then
    . ~/.sh_aliases
+fi
+
+if [ -f ~/.foundation_aliases  ]; then
+   . ~/.foundation_aliases
 fi
 
 # fzf completion

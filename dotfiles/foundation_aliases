@@ -1,0 +1,6 @@
+#!/bin/bash
+
+. ~/.foundation_functions
+
+alias esp='foundation_es_prod'
+alias efi="cd /Users/hlafleur/workspace/foundation/environment-foundation-infra/"

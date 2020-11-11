@@ -10,6 +10,20 @@ __find_in_files () {
    | fzf --header $AG_HEADER \
          --reverse \
          --preview-window=$AG_PREVIEW_WINDOW \
+         --preview $AG_PREVIEW
+
+}
+
+__find_in_files_and_open () {
+
+   SEARCH_TERM=${1:-$(pbpaste)} 
+   AG_PREVIEW="eval 'echo \"\u001b[36;1m{}\u001b[0m\"; echo \"\"; ag -C3 --color \"$SEARCH_TERM\" {}'"
+   AG_HEADER="Search term: $(eval 'echo "\u001b[33;1m$SEARCH_TERM\u001b[0m"')"
+   AG_PREVIEW_WINDOW="right:70%"
+   eval ag -l "$SEARCH_TERM" \
+   | fzf --header $AG_HEADER \
+         --reverse \
+         --preview-window=$AG_PREVIEW_WINDOW \
          --preview $AG_PREVIEW \
    | xargs -oI% vim % +/$SEARCH_TERM\\c
 

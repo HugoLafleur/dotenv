@@ -30,3 +30,11 @@ azure_show_vnet () {
       eval az network vnet show -ojson "$AZ_VNET"
    fi
 }
+
+azure_get_vmss () {
+   if [[ ! -z "$AZURE_SUBSCRIPTION" ]]; then
+      eval az vmss list --subscription "$AZURE_SUBSCRIPTION" -ojson | jq -r '.[] | [.name,.resourceGroup,.sku.name,.sku.capacity]|@csv' | column -t -s,
+   else
+      eval az vmss list -ojson | jq -r '.[] | [.name,.resourceGroup,.sku.name,.sku.capacity]|@csv' | column -t -s,
+   fi
+}

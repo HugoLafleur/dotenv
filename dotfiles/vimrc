@@ -11,13 +11,16 @@ filetype off                  " required
 set nocompatible              " be iMproved, required
 set rtp+=~/.vim/bundle/Vundle.vim
 set rtp+=/usr/local/opt/fzf
-
-" plugins
 source ~/.vim/plugins.vim
+
+" startup
+autocmd VimEnter * NERDTree
+autocmd VimEnter * wincmd p
 
 " syntax and settings
 colorscheme monokai
 syntax on
+set autoindent
 set number
 set tabstop=3
 set shiftwidth=3
@@ -31,8 +34,8 @@ set expandtab
 map <C-n> :NERDTreeToggle<CR>
 
 " Search and open file
-map <C-p> :call fzf#run({'source': 'git ls-files', 'sink': 'e', 'left': '25%'})<CR>
-map <C-o> :call fzf#run({'source': 'git ls-files', 'sink': 'tabedit', 'left': '25%'})<CR>
+map <C-p> :call fzf#run({'source': 'git ls-files', 'sink': 'e', 'down': '25%'})<CR>
+map <C-o> :call fzf#run({'source': 'git ls-files', 'sink': 'tabedit', 'down': '25%'})<CR>
 
 " tab navigation
 map <C-q> :tabprevious<CR>
@@ -44,6 +47,10 @@ autocmd VimResized * :wincmd =
 " zoom a vim pane, <C-w>= to re-balance
 nnoremap <leader>- :wincmd _<cr>:wincmd \|<cr>
 nnoremap <leader>= :wincmd =<cr>
+
+" Vim Tmux Runner
+nnoremap <leader><CR> :VtrSendFile<cr>
+:let g:vtr_filetype_runner_overrides = {'go': 'go run {file}'}
 
 " intuitive splits
 set splitbelow

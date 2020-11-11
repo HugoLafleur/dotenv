@@ -1,0 +1,8 @@
+#!/bin/bash
+
+
+foundation_es_prod () {
+   export ES_USERNAME=$(az keyvault secret show --id "https://foundation-vault.vault.azure.net/secrets/logging-obs-prod-username" -ojson | jq -r '.value')
+   export ES_PASSWORD=$(az keyvault secret show --id "https://foundation-vault.vault.azure.net/secrets/logging-obs-prod-password" -ojson | jq -r '.value')
+   export ES_URL=https://es.obs.apps.elmt.io
+}

@@ -1,0 +1,2 @@
+PODNAME CONTAINERNAME CPUREQUESTS MEMORYREQUESTS CPULIMITS MEMORYLIMITS
+.metadata.name .spec.containers[].name .spec.containers[].resources.requests.cpu .spec.containers[].resources.requests.memory .spec.containers[].resources.limits.cpu .spec.containers[].resources.limits.memory
