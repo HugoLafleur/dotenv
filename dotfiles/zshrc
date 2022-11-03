@@ -14,7 +14,8 @@ fi
 export VISUAL=vim
 export EDITOR="$VISUAL"
 export PATH=$PATH:${HOME}/workspace/.env/bin
-export PATH="/usr/local/sbin:$PATH"
+export PATH="/usr/local/sbin:$PATH:/Users/hugo.lafleur/bin"
+export GPG_TTY=`tty`
 
 setopt clobber
 

@@ -6,3 +6,21 @@ export GITHUB_OAUTH=$(cat ~/.github/oauth)
 
 alias ff='__find_in_files'
 alias fo='__find_in_files_and_open'
+
+alias h='cat ~/workspace/ai-platform-sre-knowledge-base/inventory/all_mle_servers.json|jq -r ".records[]|[.name,.ram,.cpu_count,.sys_created_on]|@csv"|column -t -s, | sort -k2 -t. |  sed "s/\"//g" |fzf -e --reverse'
+
+alias san='__show_certificate_san_list'
+
+alias opldap='__get_ldap_password_from_onepassword'
+alias opsi='eval $(op signin my)'
+
+alias inv='mle-hosts'
+
+alias dc='mle-hosts | cut -d. -f2 |egrep -o "[a-z]{3}"|sort -u'
+alias pods='mle-hosts | cut -d. -f2 |sort -u'
+alias lb='__get_load_balancer_vip_pool_members | column -t -s,'
+alias ep='__get_mlpredictor_endpoint_status'
+
+alias mhealth='curl --silent --data-urlencode "query=count by (host) (avg_over_time(up[30m]) == 0)" "localhost:9090/api/v1/query"|jq -r ".data.result[]|[.metric.host]|@csv"|tr -d "\""'
+alias ver='__get_ml_nodes_versions | fzf --reverse --exact --bind "ctrl-r:reload(. ~/.sh_functions && __get_ml_nodes_versions)"'
+alias up='__get_ml_nodes_up | fzf --reverse --exact'

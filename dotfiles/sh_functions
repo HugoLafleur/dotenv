@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/zsh
 
 __find_in_files () {
 
@@ -27,4 +27,64 @@ __find_in_files_and_open () {
          --preview $AG_PREVIEW \
    | xargs -oI% vim % +/$SEARCH_TERM\\c
 
+}
+
+__get_ldap_password_from_onepassword () {
+   op list items | jq '.[] | select( .overview.title == "ServiceNow LDAP") ' | op get item - |jq -r '.details.fields[] | select (.designation == "password") .value'
+}
+
+__show_certificate_san_list (){
+
+   nl=$'
+   '
+   openssl s_client -showcerts -connect $1:443 -servername $1 <<< "Q" 2>/dev/null | \
+   openssl x509 -inform pem -noout -fingerprint -dates -nameopt multiline -subject -certopt no_subject,no_header,no_version,no_serial,no_signame,no_validity,no_issuer,no_pubkey,no_sigdump,no_aux -text | \
+   egrep "SHA1|notBefore|notAfter|DNS:" \
+   | sed -E 's/DNS://g' \
+   | sed -E 's/^ +//g' \
+   | sed -E 's/, /\n/g' \
+   | sed -E 's/(([a-z]+)-([a-z]+)\.([a-z0-9]{4,6})\.service-now\.com)/\1,\2,\3,\4/g' | \
+   column -t -s,
+}
+
+__get_load_balancer_vip_pool_members () {
+
+   JQ_FILTER='.[]|[.pool, .f5_node, .pod, .name, .ip, .created, .updated, .last_discovered]|@csv'
+   
+   $HOME/bin/lb \
+   | jq -r "$JQ_FILTER" \
+   | tr -d '"' \
+   | sort -k2 -t,
+}
+
+__get_mlpredictor_endpoint_status () {
+   ML_PREDICTOR_ENDPOINT_FILE="$HOME/workspace/ml-overseer/files/mlpredictor-endpoints.json"
+   cat $ML_PREDICTOR_ENDPOINT_FILE \
+      | jq -r '.[].targets[]' \
+      | fzf \
+         --exact \
+         --reverse \
+         --preview 'host {} ; echo ""; . ~/.sh_aliases && __show_certificate_san_list {}'
+}
+
+__get_ml_nodes_versions_v1 () {
+    curl -s --data-urlencode 'query=mlservice_active[30m]' http://localhost:9090/api/v1/query \
+      | jq -r '.data.result[]|[.metric.host,.metric.version, .metric.datacenter, .metric.tenant, .metric.framework, ((.values|last)[0]|strftime("%Y-%m-%d %H:%M:%S"))]|@csv' \
+      | tr -d '"' \
+      | column -t -s,
+}
+
+__get_ml_nodes_versions () {
+    python3 ~/bin/get-ml-versions.py \
+      | jq -r 'sort_by(.datacenter, .host)|.[] | [.host,.version, .datacenter, .environment, .tenant, .framework, (.timestamp|strftime("%Y-%m-%d %H:%M:%S"))]|@csv' \
+      | sed -E 's/((ml[a-z]+)-([a-z]+)([0-9]{3})\.([a-z0-9]{4,6})).service-now.com/\1/g' \
+      | tr -d '"' \
+      | column -t -s,
+}
+
+__get_ml_nodes_up () {
+    curl -s --data-urlencode 'query=sum by (host, version, datacenter, environment, tenant, framework) (avg_over_time(up{job="mloverseer"}[15m]))' http://localhost:9090/api/v1/query \
+      | jq -r '.data.result[]|[.metric.host, .metric.version, .metric.datacenter, .metric.environment, .metric.tenant, .metric.framework, (if .value[1]|tonumber >= .75 then "up" else "down" end), (.value[1]|tonumber)]|@csv' \
+      | tr -d '"' \
+      | column -t -s,
 }
