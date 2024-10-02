@@ -88,3 +88,41 @@ __get_ml_nodes_up () {
       | tr -d '"' \
       | column -t -s,
 }
+
+__get_deployments_models_v1 () {
+
+   ml-get-clusters \
+   | jq -r '.result[].name, "carthagelab001.ifa"' \
+   | sort \
+   | fzf --reverse --exact --preview \
+   'curl -skL --data-urlencode "query=sum by (model,namespace) (label_replace(kube_deployment_status_replicas_ready{namespace=~\"ml.+\", deployment=~\"ml-prediction.+\", namespace=~\"ml-prediction-.+\"}, \"model\", \"\$1\", \"deployment\", \".+-([a-z0-9]+)\$\")) > 0" https://prom.apps.{}.k8s.servicenow.net/api/v1/query |jq -r ".data.result[]|[.metric.namespace,.metric.model,.value[1]]|@csv" |column -t -s, | sort'
+
+}
+
+__get_deployment_summary () {
+
+   acs genai get-gpu-allocation -otable \
+      | tail -n+4 \
+      | fzf \
+         --reverse \
+         --exact \
+         --header="$(acs genai get-gpu-allocation -otable | head -3)" \
+         --preview-window="right,85%" \
+         --preview 'acs genai get-cluster-summary --cluster-name $(echo {} | grep -Eo "([a-z0-9]+\.[a-z]"{3"})") -otable' \
+      | grep -Eo "([a-z0-9]+\.[a-z]{3})" \
+      | xargs acs genai describe-cluster -otable --cluster-name 
+
+}
+
+__get_model_versions () {
+
+   cd ~/workspace/ml-pretrained-models
+   git tag \
+      | fzf \
+         --reverse \
+         --exact \
+         --preview-window="85%" \
+         --preview 'acs genai get-model-config -v {} -otable' \
+   | xargs acs genai get-model-config -otable --model-version
+
+}

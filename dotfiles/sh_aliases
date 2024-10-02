@@ -4,6 +4,12 @@ export GITHUB_OAUTH=$(cat ~/.github/oauth)
 
 . ~/.sh_functions
 
+# homebrew
+alias brew='arch -arm64 brew'
+
+# python
+alias python='/opt/homebrew/bin/python3.12'
+
 alias ff='__find_in_files'
 alias fo='__find_in_files_and_open'
 
@@ -14,7 +20,7 @@ alias san='__show_certificate_san_list'
 alias opldap='__get_ldap_password_from_onepassword'
 alias opsi='eval $(op signin my)'
 
-alias inv='mle-hosts'
+alias inv="acs mle get-servers | jq -r '.[].name'"
 
 alias dc='mle-hosts | cut -d. -f2 |egrep -o "[a-z]{3}"|sort -u'
 alias pods='mle-hosts | cut -d. -f2 |sort -u'
@@ -22,5 +28,11 @@ alias lb='__get_load_balancer_vip_pool_members | column -t -s,'
 alias ep='__get_mlpredictor_endpoint_status'
 
 alias mhealth='curl --silent --data-urlencode "query=count by (host) (avg_over_time(up[30m]) == 0)" "localhost:9090/api/v1/query"|jq -r ".data.result[]|[.metric.host]|@csv"|tr -d "\""'
+alias maint='mle-hosts | sort -k2 -t. | grep mlnaginitrainer| fzf --exact --reverse --preview "echo {}; curl -s {}:16481/admin/status"'
 alias ver='__get_ml_nodes_versions | fzf --reverse --exact --bind "ctrl-r:reload(. ~/.sh_functions && __get_ml_nodes_versions)"'
 alias up='__get_ml_nodes_up | fzf --reverse --exact'
+
+alias tb='bssh sk8sops01.ycg0.service-now.com'
+
+alias gga='__get_deployment_summary'
+alias gmo='__get_model_versions'

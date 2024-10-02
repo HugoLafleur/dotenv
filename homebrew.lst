@@ -31,14 +31,8 @@ mtr
 newt
 nghttp2
 nmap
-now/devtools/mariadb
-openconnect
-openjdk@8
-openssl@3
 pinentry-mac
 pwgen
-python@3.8
-python@3.9
 re2
 reattach-to-user-namespace
 redis

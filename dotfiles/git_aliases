@@ -5,7 +5,7 @@
 # Git
 alias gs='git status'
 alias gd='git diff'
-alias gp='git pull'
+alias gp='git pull --rebase'
 alias gP='git push'
 alias gc='git commit'
 alias ga='git add'

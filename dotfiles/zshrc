@@ -1,9 +1,9 @@
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
 # confirmations, etc.) must go above this block; everything else may go below.
-#if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
-#  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
-#fi
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
 
 # Source Prezto.
 if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
@@ -14,8 +14,10 @@ fi
 export VISUAL=vim
 export EDITOR="$VISUAL"
 export PATH=$PATH:${HOME}/workspace/.env/bin
-export PATH="/usr/local/sbin:$PATH:/Users/hugo.lafleur/bin"
+export PATH="/usr/local/sbin:$PATH:/Users/hugo.lafleur/bin:/Users/hugo.lafleur/.env/bin"
 export GPG_TTY=`tty`
+
+source /opt/homebrew/Cellar/fzf/current/shell/key-bindings.zsh
 
 setopt clobber
 
@@ -33,9 +35,9 @@ if [ -f ~/.ansible_aliases  ]; then
   . ~/.ansible_aliases
 fi
 
-if [ -f ~/.k8s_aliases  ]; then
-  . ~/.k8s_aliases
-fi
+# if [ -f ~/.k8s_aliases  ]; then
+#   . ~/.k8s_aliases
+# fi
 
 if [ -f ~/.azure_aliases  ]; then
    . ~/.azure_aliases
@@ -60,3 +62,6 @@ ensure_tmux_is_running() {
   fi
 }
 ensure_tmux_is_running
+
+# Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
+export PATH="$PATH:$HOME/.rvm/bin"

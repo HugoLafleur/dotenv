@@ -1,6 +1,12 @@
 #!/bin/bash
 
 github_open_repo_page () {
+
+   open $(git config --get remote.origin.url | sed -E 's/ssh:\/\/git@([a-z|\.]+):[0-9]+(.+)/https:\/\/\1\2/g')
+
+}
+
+github_open_repo_page_v1 () {
    REQUEST_URL="$(git config --get remote.origin.url \
       | sed -E 's/git@github.com:([a-zA-Z0-9]+)\/([a-zA-Z0-9|-]+)(\.git)?/https:\/\/api.github.com\/repos\/\1\/\2/g')"
    REQUEST_AUTH="Authorization: token $(cat ~/.github/token)"
