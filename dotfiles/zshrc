@@ -36,13 +36,9 @@ if [ -f ~/.git_aliases  ]; then
   . ~/.git_aliases
 fi
 
-if [ -f ~/.ansible_aliases  ]; then
-  . ~/.ansible_aliases
+if [ -f ~/.k8s_aliases  ]; then
+  . ~/.k8s_aliases
 fi
-
-# if [ -f ~/.k8s_aliases  ]; then
-#   . ~/.k8s_aliases
-# fi
 
 if [ -f ~/.sh_aliases  ]; then
    . ~/.sh_aliases
