@@ -1,9 +1,0 @@
-#!/bin/bash
-
-. ~/.azure_functions
-
-alias azg='azure_list_resource_groups'
-alias azr='azure_list_rg_resources'
-alias azv='azure_show_keyvault'
-alias azn='azure_show_vnet'
-alias vmss='azure_get_vmss'

@@ -1,5 +1,0 @@
-#!/bin/bash
-
-. ~/.fdn_functions
-
-alias esp='foundation_es_prod'
