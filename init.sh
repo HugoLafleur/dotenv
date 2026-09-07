@@ -35,10 +35,10 @@ for rcfile in "${ZDOTDIR:-$HOME}"/.zprezto/runcoms/^README.md(.N); do
 done
 
 # install tat script
-curl https://raw.githubusercontent.com/christoomey/dotfiles/master/bin/tat > ~/workspace/.env/bin/tat
+curl https://raw.githubusercontent.com/christoomey/dotfiles/master/bin/tat > ~/workspace/dotenv/bin/tat
 
 # install vim plugins
-ln -fs ~/workspace/.env/dotfiles/vim ~/.vim
+ln -fs ~/workspace/dotenv/dotfiles/vim ~/.vim
 
 # install vundle
 git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim

@@ -1,0 +1,36 @@
+#!/usr/bin/env python3
+
+import json
+import re
+import os
+
+USER_HOME = os.environ['HOME']
+DATA_HOME = USER_HOME + '/workspace/ai-platform-sre-knowledge-base/inventory/'
+
+ML_LB_POOL_MEMBERS = json.load(open(DATA_HOME + 'all_lb_pools.json'))['result']
+ML_VIRTUAL_MACHINES = json.load(open(DATA_HOME + 'all_mle_servers.json'))['result']
+re_poolname_parser = re.compile("(?P<f5_node>adc-[0-9]+.(?P<pod>[a-z0-9]{4,6}).service-now.com) - (?P<pool_name>pool[_|\-|a-z]+)")
+
+pool_member_list = list()
+
+
+for pm in ML_LB_POOL_MEMBERS:
+   pm_hostname = next((vm['name'] for vm in ML_VIRTUAL_MACHINES if pm['ip_address'] == vm['ip_address']), "not found")
+   pm_fields = re_poolname_parser.match(pm['name'])
+   pm_pool = pm_fields.groupdict()['pool_name']
+   pm_f5_node = pm_fields.groupdict()['f5_node']
+   pm_pod = pm_fields.groupdict()['pod']
+   pool_member_list.append(
+      {
+         "name": pm_hostname, 
+         "ip": pm['ip_address'],
+         "f5_node": pm_f5_node,
+         "pod": pm_pod, 
+         "pool": pm_pool,
+         "created": pm['sys_created_on'],
+         "updated": pm['sys_updated_on'],
+         "last_discovered": pm['last_discovered']
+      })
+
+print(json.dumps(pool_member_list))
+

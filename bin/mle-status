@@ -1,0 +1,18 @@
+#!/bin/bash
+
+MLE_HOST="$1"
+MLE_PORT="$(echo $MLE_HOST | grep trainer > /dev/null 2>&1 && echo 16481 || echo 3774)"
+MLE_URL="$MLE_HOST:$MLE_PORT"
+JQ_FILTER=".[] | select ((.host_name == \"$MLE_HOST\") and (.u_lifecycle != \"decommissioned\")) | {\"host_name\": .host_name, \"ip_address\": .ip_address, \"u_role\": .u_role, \"cpu_name\": .cpu_name, \"ram\": .ram, \"os\": .os, \"os_version\": .os_version, \"lifecycle_stage\": .u_lifecycle, \"first_discovered\": .first_discovered, \"u_last_discovered\": .u_last_cloud_discovered}" 
+
+MLE_INVENTORY_FILE=$HOME/.acs/servers.json
+MLE_CONFIG="$(cat $MLE_INVENTORY_FILE | jq "$JQ_FILTER")"
+MLE_STATUS="$(curl -s $MLE_URL/admin/info || echo \"unavailable\")"
+MLE_METRICS="$(curl -s $MLE_URL/admin/stats || echo \"unavailable\")"
+eval $(echo $MLE_METRICS | jq > /dev/null 2>&1) || MLE_METRICS="$(echo \"unavailable\")"
+[[ $(echo $MLE_PORT) == "16481" ]] && MLE_SERVICES="$(curl -s $MLE_URL/admin/services | jq '[.services.effective[]|(.name + ":" + .version)]|sort')" || MLE_SERVICES=""
+eval $(echo $MLE_SERVICES | jq > /dev/null 2>&1) || MLE_SERVICES="$(echo \"unavailable\")"
+[[ $(echo $MLE_SERVICES) == "" ]] && MLE_SERVICES="$(echo \"unavailable\")"
+
+# echo "{ \"config\": $MLE_CONFIG, \"status\": $MLE_STATUS, \"services\": $MLE_SERVICES, \"metrics\": $MLE_METRICS}"|jq -C "" 
+echo "{ \"config\": $MLE_CONFIG, \"status\": $MLE_STATUS, \"services\": $MLE_SERVICES, \"metrics\": $MLE_METRICS}"  | jq -C 

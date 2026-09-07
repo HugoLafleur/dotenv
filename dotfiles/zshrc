@@ -13,13 +13,22 @@ fi
 # Customize to your needs...
 export VISUAL=vim
 export EDITOR="$VISUAL"
-export PATH=$PATH:${HOME}/workspace/.env/bin
-export PATH="/usr/local/sbin:$PATH:/Users/hugo.lafleur/bin:/Users/hugo.lafleur/.env/bin"
+export PATH=$PATH:${HOME}/workspace/dotenv/bin:/Users/hugo.lafleur/.local/bin
+export PATH="/usr/local/sbin:$PATH:/Users/hugo.lafleur/bin"
 export GPG_TTY=`tty`
 
 source /opt/homebrew/Cellar/fzf/current/shell/key-bindings.zsh
 
 setopt clobber
+
+# fzf
+source <(fzf --zsh)
+
+
+# docker completion
+fpath=(~/.docker/completions \\$fpath)
+autoload -Uz compinit
+compinit
 
 [[ -f ~/.p10k.zsh ]] && source ~/.p10k.zsh
 
@@ -47,8 +56,8 @@ if [ -f ~/.sh_aliases  ]; then
    . ~/.sh_aliases
 fi
 
-if [ -f ~/.foundation_aliases  ]; then
-   . ~/.foundation_aliases
+if [ -f ~/.snow_aliases  ]; then
+   . ~/.snow_aliases
 fi
 
 # fzf completion
@@ -62,6 +71,14 @@ ensure_tmux_is_running() {
   fi
 }
 ensure_tmux_is_running
+# The following lines have been added by Docker Desktop to enable Docker CLI completions.
+fpath=(/Users/hugo.lafleur/.docker/completions $fpath)
+autoload -Uz compinit
+compinit
+# End of Docker CLI completions
+
+# Added by Windsurf
+export PATH="/Users/hugo.lafleur/.codeium/windsurf/bin:$PATH"
 
 # Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
 export PATH="$PATH:$HOME/.rvm/bin"

@@ -1,0 +1,19 @@
+#!/bin/bash
+
+JQ_FILTER='.[] | select ((.u_lifecycle != "decommissioned") and (.operational_status != "6") ) | [.host_name,(.cpu_count|tonumber) * (.cpu_core_count|tonumber),.ram, .u_lifecycle, .os, .os_version, .sys_created_on, .last_discovered]|@csv'
+
+MLE_HOST=$( \
+   acs mle get-servers \
+    | jq -r "$JQ_FILTER" \
+    | sort -t- -k1,2 \
+    | column -t -s, \
+    | tr -d '"' \
+    | fzf -e  \
+         --reverse \
+         --preview 'mle-status $(echo {} | grep -o "ml.*service-now.com")' \
+         --bind=alt-down:preview-page-down,alt-up:preview-page-up \
+         --preview-window="right,35%" \
+    | grep -o "ml.*service-now.com"
+)
+
+[[ ! -z $MLE_HOST ]] && bssh "$MLE_HOST"

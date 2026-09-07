@@ -2,3 +2,7 @@
 
 dotfiles/vim/bundle/**
 .DS_Store
+
+# large, easily re-downloaded binaries — not personal config
+bin/twistcli
+bin/twistcli.bak

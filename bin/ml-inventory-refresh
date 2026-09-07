@@ -1,0 +1,14 @@
+#!/bin/bash
+
+#
+DC_TOKEN="$(op item get 'ServiceNow OpenLDAP' --otp )"
+LDAP_PWD="$(op item get 'ServiceNow OpenLDAP' --field password)"
+
+USERPASS="hugo.lafleur:"$LDAP_PWD$DC_TOKEN
+USERPASS_B64=$(echo -n $USERPASS | base64)
+
+DC_QUERY='u_lifecycle!%3Ddecommissioned%5EnameSTARTSWITHml&sysparm_view='
+
+curl --verbose -XGET \
+   --header "Authorization: Basic $USERPASS_B64"  \
+   --header "Accept: application/json" "https://datacenter.service-now.com/api/now/table/cmdb_ci_linux_server?sysparm_query=$DC_QUERY" > $HOME/workspace/ai-platform-sre-knowledge-base/inventory/all_mle_servers.json

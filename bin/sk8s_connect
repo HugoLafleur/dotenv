@@ -1,0 +1,9 @@
+#!/bin/zsh
+
+CLUSTER=${$(acs genai get-clusters | jq -r '.[].name' | fzf --exact --header "CONNECT TO SNOWSK8S CLUSTER"):-$CLUSTER}
+
+if [[ -n "$CLUSTER" ]]; then
+   CMD="podman run --rm -it --env USER=$USER --env CLUSTER=$CLUSTER --name hugo.lafleur_$CLUSTER docker-prd-local.artifactory-edge.servicenow.net/gitlab.servicenow.net/syseng/snc-k8s/toolbox-image/k8toolbox:latest"
+   SK8S_TOOLBOX_BSSH="bssh sk8sops01.ycg0.service-now.com -c \"$CMD\""
+   tmux neww -n "sk8s://$CLUSTER" "$SK8S_TOOLBOX_BSSH"
+fi

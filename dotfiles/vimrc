@@ -20,7 +20,7 @@ autocmd VimEnter * wincmd p
 " syntax and settings
 colorscheme monokai
 syntax on
-set autoindent
+" set autoindent
 set number
 set tabstop=3
 set shiftwidth=3

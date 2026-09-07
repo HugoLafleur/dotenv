@@ -1,0 +1,3 @@
+#!/bin/zsh
+
+open 'https://support.servicenow.com/com.glideapp.servicecatalog_cat_item_view.do?v=1&sysparm_id=d7cf72f34f4ecb40927b60001310c72c'

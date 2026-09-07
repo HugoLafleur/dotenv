@@ -1,0 +1,7 @@
+#!/bin/zsh
+
+TWILIO_AUTH=$(op item get Twilio --fields AccountSid,AuthToken --format json)
+TWILIO_ACCOUNT_SID=$(echo $TWILIO_AUTH | jq -r ".[] | select (.label == \"AccountSid\") .value ")
+TWILIO_AUTH_TOKEN=$(echo $TWILIO_AUTH | jq -r ".[] | select (.label == \"AuthToken\") .value ")
+
+curl -s "https://api.twilio.com/2010-04-01/Accounts/$TWILIO_ACCOUNT_SID/IncomingPhoneNumbers.json?pageSize=1000" -u $TWILIO_ACCOUNT_SID:$TWILIO_AUTH_TOKEN  | jq -r  '.incoming_phone_numbers[] | [.phone_number, .friendly_name,.voice_url] | @csv' | column -t -s, | grep aivoiceservice | sort -k2 -t:

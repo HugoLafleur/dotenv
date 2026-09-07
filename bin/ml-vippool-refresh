@@ -1,0 +1,24 @@
+#!/bin/bash
+
+# check if logged in
+if [ -z ~/.onepassword/token ]
+then
+   op item list > /dev/null 2>&1 || eval $(op signin --account my)
+else
+   export $(cat ~/.onepassword/token) && op item list > /dev/null 2>&1 || eval $(op signin --account my)
+fi
+env | grep OP_SESSION > ~/.onepassword/token
+
+#
+DC_TOKEN="$(op item get 'ServiceNow Datacenter OTP' --otp )"
+LDAP_PWD="$(op item get 'ServiceNow OpenLDAP' --field password)"
+
+USERPASS="hugo.lafleur:"$LDAP_PWD$DC_TOKEN
+USERPASS_B64=$(echo -n $USERPASS | base64)
+
+DC_QUERY='nameLIKEmlpredictor'
+
+curl --verbose -XGET \
+   --header "Authorization: Basic $USERPASS_B64"  \
+   --header "Accept: application/json" "https://datacenter.service-now.com/api/now/table/u_big_ip_pool_member?sysparm_query=$DC_QUERY" \
+   > /Users/hugo.lafleur/workspace/snow/cmdb/all_lb_pools.json

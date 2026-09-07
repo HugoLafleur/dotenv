@@ -1,0 +1,13 @@
+#!/bin/zsh
+
+
+while read host
+do
+   MLE_HOST=$host
+   MLE_SERVICE_TYPE=$(echo $MLE_HOST | grep trainer > /dev/null 2>&1 && echo MLE_TRAINER || echo MLE_PREDICTOR)
+   MLE_SERVICE_PORT=$(echo $MLE_SERVICE_TYPE | grep MLE_TRAINER > /dev/null 2>&1 && echo "16481" || echo "3774")
+
+   echo -n "$MLE_HOST => "
+   cat <(curl -s $MLE_HOST:$MLE_SERVICE_PORT/admin/info || echo "{\"version\": \"unreachable\"}") | jq -r '.version' || echo ""
+done
+

@@ -1,0 +1,4 @@
+#!/bin/zsh
+
+cat ~/workspace/ai-platform-sre-knowledge-base/inventory/all_mle_servers.json \
+   | jq -r '.result[] | select ((.u_lifecycle != "decommissioned") and (.operation_status != "6")) | [.host_name,.cpu_count,.ram, .sys_created_on, .sys_updated_on, .last_discovered]|@csv' | column -t -s, | sed 's/\"//g'
